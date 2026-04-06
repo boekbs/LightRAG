@@ -25,3 +25,4 @@
 ## Доп. документы
 
 - [docs/Render-fork.md](docs/Render-fork.md) — форк, Render, синхронизация с HKUDS.
+- [docs/Render-auth.md](docs/Render-auth.md) — отключить «Login Free», API-ключ для бота.
