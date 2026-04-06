@@ -26,3 +26,4 @@
 
 - [docs/Render-fork.md](docs/Render-fork.md) — форк, Render, синхронизация с HKUDS.
 - [docs/Render-auth.md](docs/Render-auth.md) — отключить «Login Free», API-ключ для бота.
+- [docs/Render-persistence.md](docs/Render-persistence.md) — диск Render, чтобы индекс не слетал после деплоя.
