@@ -13,7 +13,7 @@
 ## Локальная папка
 
 - **`C:\My documents\LightRAG`** — клон форка **boekbs/LightRAG** (`origin`), с привязкой **`upstream`** → HKUDS.
-- Папка **`telegram-bot\`** — копия кода бота; отдельный git-репозиторий **lightrag-telegram-bot** (не submodule).
+- Код Telegram-бота ведётся в отдельном репозитории **lightrag-telegram-bot** (не в этом репо).
 
 ## Облако (типично Render)
 
