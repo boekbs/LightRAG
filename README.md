@@ -11,6 +11,7 @@ Local setup artifacts and local-install docs were removed intentionally.
 
 ## Cloud deployment docs
 
+- **[docs/deploy/README.md](docs/deploy/README.md)** — модульные инструкции для переноса в другой Cursor
 - [PROJECT.md](PROJECT.md)
 - [env.render.example](env.render.example)
 - [docs/Render-fork.md](docs/Render-fork.md)

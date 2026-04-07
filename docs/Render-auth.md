@@ -14,7 +14,7 @@
    | `AUTH_ACCOUNTS` | `admin:твой_надёжный_пароль` (или несколько через запятую; см. `env.example` для bcrypt) |
    | `TOKEN_SECRET` | из скрипта |
    | `LIGHTRAG_API_KEY` | из скрипта (случайная строка) |
-| `WHITELIST_PATHS` | `/health` (только health без авторизации) |
+   | `WHITELIST_PATHS` | `/health` (только health без авторизации) |
    | `TOKEN_EXPIRE_HOURS` | опционально, например `48` |
 
 3. **Render → lightrag-telegram-bot → Environment** — задай **`LIGHTRAG_API_KEY`** тем же значением, что в шаге 2.
