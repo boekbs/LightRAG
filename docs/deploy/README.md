@@ -13,6 +13,8 @@
 | 5 | [05-persistence-RU.md](05-persistence-RU.md) | Persistent Disk, `WORKING_DIR`, `INPUT_DIR` |
 | 6 | [06-operations-RU.md](06-operations-RU.md) | Чеклист деплоя, проверки, типовые ошибки |
 | 7 | [07-repositories-RU.md](07-repositories-RU.md) | Репозитории, форк, синхронизация с апстримом |
+| 8 | [08-open-webui-render-RU.md](08-open-webui-render-RU.md) | Open WebUI на Render, `OLLAMA_BASE_URL`, диск, `X-API-Key` |
+| — | [render-open-webui.yaml](render-open-webui.yaml) | Blueprint: образ `ghcr.io/open-webui/open-webui`, диск `/app/backend/data` |
 
 ## Шаблон переменных в репозитории
 

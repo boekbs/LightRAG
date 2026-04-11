@@ -13,6 +13,7 @@
 - [ ] Web UI: вход по логину/паролю из `AUTH_ACCOUNTS` (не «Login Free»).
 - [ ] Загрузка тестового документа — статус Completed.
 - [ ] Telegram: сообщение боту; при whitelist — ваш id в `ALLOWED_TELEGRAM_USER_IDS`.
+- [ ] Open WebUI (если используете): см. [08-open-webui-render-RU.md](08-open-webui-render-RU.md) — `OLLAMA_BASE_URL` = origin LightRAG, диск `/app/backend/data`, при `LIGHTRAG_API_KEY` — заголовок `X-API-Key` в подключении Ollama.
 
 ## Типовые ошибки
 
@@ -23,6 +24,8 @@
 | `TOKEN_SECRET must be explicitly set` | Задан непустой `TOKEN_SECRET`, не дефолтный из примеров |
 | Данные пропали после redeploy | `WORKING_DIR`/`INPUT_DIR` на Persistent Disk, не `./rag_storage` в контейнере |
 | «Login Free» не исчезает | `AUTH_ACCOUNTS` и `TOKEN_SECRET` на LightRAG |
+| Open WebUI: модели Ollama пустые / 404 | `OLLAMA_BASE_URL` без суффикса `/api/ollama`; проверка: `GET …/api/tags` |
+| Open WebUI: 403 к LightRAG | В подключении Ollama добавить header `X-API-Key` = `LIGHTRAG_API_KEY` |
 
 ## Логи
 

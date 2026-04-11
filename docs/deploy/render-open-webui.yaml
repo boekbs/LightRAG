@@ -1,0 +1,45 @@
+# Open WebUI on Render (prebuilt image) + LightRAG as Ollama-compatible backend
+#
+# Usage:
+#   - In Render Dashboard: Blueprint → New Blueprint Instance → connect this repo,
+#     set "Blueprint path" to: docs/deploy/render-open-webui.yaml
+#   - Or copy this file to repo root as render.yaml if you manage only Open WebUI here.
+#
+# After first deploy, set sync:false secrets in the Dashboard (OLLAMA_BASE_URL, optional API key flow).
+#
+# LightRAG Ollama API in this fork: GET {LIGHTRAG_ORIGIN}/api/tags , POST {LIGHTRAG_ORIGIN}/api/chat
+# Open WebUI expects: OLLAMA_BASE_URL = scheme + host only (no /api/ollama suffix).
+
+services:
+  - type: web
+    name: open-webui
+    runtime: image
+    plan: starter
+    region: oregon
+    numInstances: 1
+    image:
+      url: ghcr.io/open-webui/open-webui:main
+    healthCheckPath: /health
+    # Persistent disk: chats, DB, caches (see Open WebUI Dockerfile)
+    disk:
+      name: webui-data
+      mountPath: /app/backend/data
+      sizeGB: 10
+    envVars:
+      # Origin of LightRAG only, e.g. https://lightrag-xxx.onrender.com
+      # Client will call {OLLAMA_BASE_URL}/api/tags and /api/chat
+      - key: OLLAMA_BASE_URL
+        sync: false
+      - key: WEBUI_SECRET_KEY
+        generateValue: true
+      # Set to "False" only on a fresh volume; existing DB users may block disabling auth
+      - key: WEBUI_AUTH
+        value: "False"
+      - key: SCARF_NO_ANALYTICS
+        value: "true"
+      - key: DO_NOT_TRACK
+        value: "true"
+      - key: ANONYMIZED_TELEMETRY
+        value: "false"
+      - key: UVICORN_WORKERS
+        value: "1"

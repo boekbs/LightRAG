@@ -11,6 +11,7 @@
 | Компонент | Где | Роль |
 |-----------|-----|------|
 | LightRAG | Render, Docker | Индексация, граф знаний, запросы, Web UI |
+| Open WebUI (опционально) | Render, Docker | Отдельный чат-UI; бэкенд Ollama → LightRAG `/api/chat` |
 | Telegram-бот | Render, Python | Текст и голос → Whisper → API LightRAG |
 | DeepSeek | Облако API | LLM для извлечения сущностей и ответов |
 | OpenAI | Облако API | Эмбеддинги (индексация) и Whisper (голос в боте) |
@@ -25,4 +26,5 @@
 ## Дальше
 
 - Переменные сервера: [02-lightrag-render-RU.md](02-lightrag-render-RU.md)
+- Open WebUI + LightRAG (Ollama API): [08-open-webui-render-RU.md](08-open-webui-render-RU.md)
 - Переменные бота: [03-telegram-bot-render-RU.md](03-telegram-bot-render-RU.md)
