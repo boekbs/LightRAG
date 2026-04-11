@@ -14,7 +14,9 @@ services:
   - type: web
     name: open-webui
     runtime: image
-    plan: starter
+    # Starter (~512 MiB) often OOMs during Open WebUI cold start (migrations + uvicorn).
+    # Use standard (2 GiB) or higher; downgrade only if you use a proven slim image/tag.
+    plan: standard
     region: oregon
     numInstances: 1
     image:

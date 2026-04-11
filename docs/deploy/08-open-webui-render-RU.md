@@ -45,7 +45,7 @@ curl.exe -sS -H "X-API-Key: YOUR_KEY" "https://YOUR-LIGHTRAG.onrender.com/api/ta
 1. **New** → **Web Service** → **Existing Image**.
 2. Image URL: `ghcr.io/open-webui/open-webui:main`  
    Для продакшена лучше **закрепить тег релиза** (например `v0.x.x`), а не `main`.
-3. **Instance type**: Starter или выше; **не включайте** горизонтальный скейлинг вместе с диском (у Render диск — один на инстанс).
+3. **Instance type**: минимум **Standard (2 GB RAM)**. План **Starter (~512 MiB)** на полном образе `open-webui` часто падает с `Out of memory (used over 512Mi)` при первом старте (Alembic + приложение). **не включайте** горизонтальный скейлинг вместе с диском (у Render диск — один на инстанс).
 4. **Disk**: добавить persistent disk, mount path **`/app/backend/data`**, размер по необходимости (например 10 GB).
 5. **Health check path**: `/health`.
 6. Переменные окружения — см. таблицу ниже.
@@ -81,6 +81,24 @@ curl.exe -sS -H "X-API-Key: YOUR_KEY" "https://YOUR-LIGHTRAG.onrender.com/api/ta
 1. **Список моделей:** в интерфейсе Open WebUI обновите подключение Ollama / список моделей — должна появиться **`lightrag:latest`** (или имя из `OLLAMA_EMULATING_MODEL_NAME:TAG` на LightRAG).
 2. **Чат:** выберите эту модель, задайте вопрос по вашей проиндексированной базе. Ответ идёт через [`OllamaAPI.chat`](../../lightrag/api/routers/ollama_api.py) в LightRAG.
 3. **Не путать с RAG Open WebUI:** встроенные документы/эмбеддинги внутри Open WebUI — отдельная подсистема; для **вашей** базы знаний используется только чат с моделью LightRAG.
+
+## Типовые проблемы при деплое
+
+### `Out of memory (used over 512Mi)`
+
+Полный образ Open WebUI на старте грузит Python, миграции SQLite, uvicorn — **512 MiB (Starter) обычно не хватает**.
+
+**Что сделать:** в Render откройте сервис Open WebUI → **Settings** → **Instance type** → выберите **Standard (2 GB)** или выше → сохраните и дождитесь redeploy.
+
+Если Blueprint снова выставит Starter при синхронизации, в репозитории в [render-open-webui.yaml](render-open-webui.yaml) указан `plan: standard`.
+
+### `No open ports detected`
+
+Часто **следствие долгого старта или OOM**: процесс не успевает слушать `PORT`, пока Render сканирует порт. После увеличения RAM сообщение обычно пропадает. Убедитесь, что приложение использует переменную **`PORT`**, которую задаёт Render (образ Open WebUI это делает).
+
+### `CORS_ALLOW_ORIGIN IS SET TO '*'`
+
+Предупреждение Open WebUI о продакшене. Для закрытия UI по домену позже задайте узкий `CORS_ALLOW_ORIGIN` по [документации Open WebUI](https://docs.openwebui.com/).
 
 ## Дальше
 

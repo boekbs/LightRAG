@@ -26,6 +26,7 @@
 | «Login Free» не исчезает | `AUTH_ACCOUNTS` и `TOKEN_SECRET` на LightRAG |
 | Open WebUI: модели Ollama пустые / 404 | `OLLAMA_BASE_URL` без суффикса `/api/ollama`; проверка: `GET …/api/tags` |
 | Open WebUI: 403 к LightRAG | В подключении Ollama добавить header `X-API-Key` = `LIGHTRAG_API_KEY` |
+| Open WebUI: `Out of memory (used over 512Mi)` | План **Standard (2 GB)** или выше; Starter для полного образа обычно мало — см. [08-open-webui-render-RU.md](08-open-webui-render-RU.md) |
 
 ## Логи
 
