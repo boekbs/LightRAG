@@ -100,6 +100,30 @@ curl.exe -sS -H "X-API-Key: YOUR_KEY" "https://YOUR-LIGHTRAG.onrender.com/api/ta
 
 Предупреждение Open WebUI о продакшене. Для закрытия UI по домену позже задайте узкий `CORS_ALLOW_ORIGIN` по [документации Open WebUI](https://docs.openwebui.com/).
 
+## Сброс к базовой настройке (Render)
+
+Все состояние Open WebUI (SQLite, пользователи, настройки из UI, кэши) лежит на **persistent disk** в каталоге **`/app/backend/data`**. Сброс = **пустой том** + при необходимости поправить **Environment**.
+
+**Внимание:** пропадут **все** чаты, аккаунты и настройки, сделанные только в Open WebUI. URL сервиса (например `https://open-webui-o69j.onrender.com`) обычно **не меняется**.
+
+### Шаги в Dashboard Render
+
+1. **Сохраните** в надёжное место значения **Environment** вашего сервиса Open WebUI (особенно `OLLAMA_BASE_URL`, `WEBUI_SECRET_KEY`, флаги `WEBUI_AUTH` / `ENABLE_SIGNUP`). Секреты не светите в скриншотах.
+2. Откройте сервис **Open WebUI** → раздел **Disks** (или **Persistence**).
+3. **Удалите** прикреплённый persistent disk к этому сервису (действие вроде **Delete** / **Remove disk**). Подтвердите — данные на диске уничтожаются.
+4. **Добавьте новый** disk с тем же **Mount path**: **`/app/backend/data`**, размер как раньше (например 10 GB).
+5. Запустите **Manual Deploy** (Deploy latest commit) для этого сервиса и дождитесь успешного **Live**.
+6. В **Environment** выставьте желаемую «базовую» конфигурацию, например:
+   - **`OLLAMA_BASE_URL`** — снова `https://<ваш-lightrag>.onrender.com` (только origin).
+   - **`WEBUI_SECRET_KEY`** — новая случайная строка или оставьте сгенерированный Render ключ.
+   - **`WEBUI_AUTH`** = **`True`**, если нужен вход по паролю с чистого листа.
+   - **`ENABLE_SIGNUP`** = **`True`** до создания первого пользователя, затем при необходимости **`false`**.
+   - Остальное по таблице выше (`UVICORN_WORKERS`, телеметрия и т.д.).
+7. Снова откройте сайт Open WebUI — должна быть **первая настройка / регистрация**, как после нового деплоя.
+8. В **Admin → Settings → Connections** заново укажите **Ollama** на LightRAG и при необходимости заголовок **`X-API-Key`**.
+
+Если в вашем плане Render доступен **Shell** к инстансу, альтернатива без удаления диска — остановить сервис и очистить содержимое **`/app/backend/data`** под root (оставляя пустой каталог); для большинства проще **удалить и создать диск заново**, как выше.
+
 ## Дальше
 
 - Безопасность LightRAG: [04-security-RU.md](04-security-RU.md)
